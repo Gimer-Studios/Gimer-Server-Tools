@@ -44,6 +44,8 @@ commands:
     description: Allows players to check other players playtime and when they last played.
   killallhostile:
     description: Allows operators to kill all hostile mobs in the world.
+  motd:
+    description: Allows operators to easily change the MOTD without going into the server config files and instead lets them do it ingame or in the server terminal.
 
 
 permissions:

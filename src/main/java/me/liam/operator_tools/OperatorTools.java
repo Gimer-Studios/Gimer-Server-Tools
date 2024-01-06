@@ -4,6 +4,7 @@ import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,6 +22,7 @@ import org.bukkit.entity.SpawnCategory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
@@ -49,6 +51,9 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
     private long serverStartTime;
 
     private ChatLogger chatLogger;
+    private String dynamicMOTD = "Welcome to our server!";
+    private File motdFile;
+
 
     private static boolean isFolia() {
         try {
@@ -81,6 +86,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
     }
 
     private final DecimalFormat coordinateFormat = new DecimalFormat("#.#");
+
     @Override
     public void onEnable() {
         getLogger().info("GimerServerTools plugin has been enabled!");
@@ -88,6 +94,8 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
         new Metrics(this, pluginId);
         serverStartTime = System.currentTimeMillis();
         getLogger().info("Thanks for using Gimer Server Tools!");
+        loadDynamicMOTD();
+        setDynamicMOTD(dynamicMOTD);
         getCommand("c").setExecutor(this);
         getCommand("s").setExecutor(this);
         getCommand("a").setExecutor(this);
@@ -108,6 +116,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
         getCommand("head").setExecutor(new HeadCommand());
         getCommand("playertime").setExecutor(new PlaytimeCommand());
         getCommand("killallhostile").setExecutor(new KillAllHostileCommand(this));
+        getCommand("motd").setExecutor(new MOTDCommand(this));
         String version = Bukkit.getVersion();
         boolean isFolia = version.contains("Folia");
         chatLogger = new ChatLogger(this);
@@ -149,9 +158,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
                 sender.sendMessage(ChatColor.RED + "You do not have permission to use this command!");
             }
             return true;
-        }
-
-        else if (command.getName().equalsIgnoreCase("maintenance")) {
+        } else if (command.getName().equalsIgnoreCase("maintenance")) {
             if (sender.isOp()) {
                 maintenanceMode = true;
                 broadcastMaintenanceMessage();
@@ -324,6 +331,20 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
         });
     }
 
+    private void loadConfig() {
+        saveDefaultConfig();
+        config = getConfig();
+        dynamicMOTD = config.getString("dynamic_motd", "Welcome to our server!");
+    }
+
+
+    private void saveDynamicMOTD() {
+        try {
+            Files.write(motdFile.toPath(), dynamicMOTD.getBytes(StandardCharsets.UTF_8));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     private void kickNonOpPlayers() {
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
             if (!onlinePlayer.isOp()) {
@@ -332,9 +353,32 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
             }
         }
 
-
-
     }
+
+    public void setDynamicMOTD(String newMOTD) {
+        dynamicMOTD = newMOTD;
+
+        Bukkit.getScheduler().runTask(this, () -> {
+            Bukkit.getServer().setMotd(ChatColor.translateAlternateColorCodes('&', dynamicMOTD));
+            saveDynamicMOTD();
+        });
+    }
+
+
+    private void loadDynamicMOTD() {
+        motdFile = new File(getDataFolder(), "motd.txt");
+
+        try {
+            if (!motdFile.exists()) {
+                motdFile.createNewFile();
+            }
+
+            dynamicMOTD = new String(Files.readAllBytes(motdFile.toPath()), StandardCharsets.UTF_8);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void displayServerInfo(CommandSender sender) {
         sender.sendMessage(ChatColor.BLUE + "----- Server Information -----");
