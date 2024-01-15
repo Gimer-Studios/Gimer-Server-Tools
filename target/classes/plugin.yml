@@ -1,5 +1,5 @@
 name: GimerServerTools
-version: '2.1'
+version: '2.2'
 main: me.liam.operator_tools.OperatorTools
 api-version: '1.20'
 folia-supported: true
@@ -45,8 +45,13 @@ commands:
   killallhostile:
     description: Allows operators to kill all hostile mobs in the world.
   motd:
-    description: Allows operators to change the MOTD without going into the server config.
-
+    description: Allows operators to easily change the MOTD without going into the server config files and instead lets them do it ingame or in the server terminal.
+  survey:
+    description: Allows operators to run a survey for a certain amount of time.
+    usage: /survey Question 1
+  vote:
+    description: Allows players to vote on a survey.
+    usage: /vote yes|no
 
 permissions:
   operator_tools.commands:

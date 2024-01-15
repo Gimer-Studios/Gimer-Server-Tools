@@ -2,9 +2,11 @@ org\bstats\bukkit\Metrics$MultiLineChart.class
 org\bstats\bukkit\Metrics$SingleLineChart.class
 me\liam\operator_tools\PlayerStats.class
 org\bstats\bukkit\Metrics$MetricsBase.class
+me\liam\operator_tools\SurveyManager.class
 me\liam\operator_tools\UpdateChecker.class
 org\bstats\bukkit\Metrics$SimpleBarChart.class
 me\liam\operator_tools\InvseeCommand.class
+me\liam\operator_tools\Survey.class
 me\liam\operator_tools\HeadCommand.class
 me\liam\operator_tools\MOTDCommand.class
 org\bstats\bukkit\Metrics$JsonObjectBuilder.class
@@ -15,6 +17,8 @@ me\liam\operator_tools\OperatorTools$PlayerStats.class
 org\bstats\bukkit\Metrics$AdvancedPie.class
 org\bstats\bukkit\Metrics$SimplePie.class
 me\liam\operator_tools\ChatLogger.class
+me\liam\operator_tools\SurveyCommand.class
+me\liam\operator_tools\VoteCommand.class
 me\liam\operator_tools\SpectateCommand.class
 org\bstats\bukkit\Metrics$1.class
 me\liam\operator_tools\MetricsLite.class
