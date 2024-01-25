@@ -3,6 +3,7 @@ version: '2.2'
 main: me.liam.operator_tools.OperatorTools
 api-version: '1.20'
 folia-supported: true
+
 commands:
   c:
     description: Switch to Creative mode
