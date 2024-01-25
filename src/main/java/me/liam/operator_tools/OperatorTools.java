@@ -1,24 +1,18 @@
 package me.liam.operator_tools;
 
+import org.bstats.bukkit.Metrics;
 import org.bukkit.*;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Sound;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.SpawnCategory;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,7 +25,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class OperatorTools extends JavaPlugin implements CommandExecutor, Listener {
@@ -117,6 +110,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
         getCommand("playertime").setExecutor(new PlaytimeCommand());
         getCommand("killallhostile").setExecutor(new KillAllHostileCommand(this));
         getCommand("motd").setExecutor(new MOTDCommand(this));
+        getCommand("shutdown").setExecutor(new ManagementCommands());
         String version = Bukkit.getVersion();
         boolean isFolia = version.contains("Folia");
         chatLogger = new ChatLogger(this);
