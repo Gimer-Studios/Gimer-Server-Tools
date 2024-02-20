@@ -1,5 +1,5 @@
 name: GimerServerTools
-version: '2.2'
+version: '2.3'
 main: me.liam.operator_tools.OperatorTools
 api-version: '1.20'
 folia-supported: true
