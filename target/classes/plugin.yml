@@ -1,5 +1,5 @@
 name: GimerServerTools
-version: '2.2'
+version: '2.3'
 main: me.liam.operator_tools.OperatorTools
 api-version: '1.20'
 folia-supported: true
@@ -49,6 +49,21 @@ commands:
     description: Allows operators to easily change the MOTD without going into the server config files and instead lets them do it ingame or in the server terminal.
   shutdown:
     description: Allows operators to shutdown the server without going into the server terminal.
+  nick:
+    description: Change your nickname.
+    usage: /nick <NICKNAME>
+  nickdisable:
+    description: Disable the nickname feature.
+  nickenable:
+    description: Enable the nickname feature.
+  reminder:
+    description: Set a reminder.
+    usage: /reminder <thing to be reminded about>
+  reminders:
+    description: List your reminders.
+  reminderremove:
+    description: Remove a reminder.
+    usage: /reminderremove <reminder number>
 
 permissions:
   operator_tools.commands:

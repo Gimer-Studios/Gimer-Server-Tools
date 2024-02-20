@@ -84,7 +84,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
     public void onEnable() {
         getLogger().info("GimerServerTools plugin has been enabled!");
         int pluginId = 20270;
-        new Metrics(this, pluginId);
+        Metrics metrics = new Metrics(this, pluginId);
         serverStartTime = System.currentTimeMillis();
         getLogger().info("Thanks for using Gimer Server Tools!");
         loadDynamicMOTD();
@@ -111,6 +111,7 @@ public class OperatorTools extends JavaPlugin implements CommandExecutor, Listen
         getCommand("killallhostile").setExecutor(new KillAllHostileCommand(this));
         getCommand("motd").setExecutor(new MOTDCommand(this));
         getCommand("shutdown").setExecutor(new ManagementCommands());
+        getServer().getPluginManager().registerEvents(new JoinMessages(), this);
         String version = Bukkit.getVersion();
         boolean isFolia = version.contains("Folia");
         chatLogger = new ChatLogger(this);
